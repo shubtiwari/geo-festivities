@@ -44,7 +44,7 @@ const Index: React.FC = () => {
       radius: 2,
       city: '',
       state: '',
-      country: 'USA'
+      country: 'India'
     },
     eventTypes: [],
     ticketType: 'all'
@@ -245,7 +245,7 @@ const Index: React.FC = () => {
             <Button variant="outlined" onClick={() => {
               setSearchTerm('');
               setFilters({
-                location: { radius: 2, city: '', state: '', country: 'USA' },
+                location: { radius: 2, city: '', state: '', country: 'India' },
                 eventTypes: [],
                 ticketType: 'all'
               });

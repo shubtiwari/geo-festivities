@@ -62,9 +62,9 @@ export const eventTypes: EventType[] = [
 export const mockEvents: Event[] = [
   {
     id: '1',
-    name: 'Central Park Cleanup Drive',
+    name: 'Marine Drive Cleanup Drive',
     type: eventTypes[0],
-    description: 'Join us for a community-driven cleanup initiative at Central Park. We\'ll be focusing on removing litter, planting new trees, and creating awareness about environmental conservation. This is a great opportunity to meet like-minded people while making a positive impact on our community.',
+    description: 'Join us for a community-driven cleanup initiative at Marine Drive. We\'ll be focusing on removing litter, planting new trees, and creating awareness about environmental conservation. This is a great opportunity to meet like-minded people while making a positive impact on our community.',
     requirements: [
       'Bring your own water bottle',
       'Wear comfortable clothes and shoes',
@@ -77,18 +77,18 @@ export const mockEvents: Event[] = [
       'All participants must check in at the registration desk',
       'Children under 16 must be accompanied by an adult',
       'Follow all safety guidelines provided by organizers',
-      'Respect the park environment and wildlife'
+      'Respect the environment and wildlife'
     ],
     location: {
-      state: 'New York',
-      country: 'USA',
-      city: 'New York',
-      address: '1 Central Park West, New York, NY 10023',
+      state: 'Maharashtra',
+      country: 'India',
+      city: 'Mumbai',
+      address: 'Marine Drive, Nariman Point, Mumbai',
       coordinates: {
-        lat: 40.7829,
-        lng: -73.9654
+        lat: 18.9437,
+        lng: 72.8231
       },
-      pincode: '10023'
+      pincode: '400020'
     },
     capacity: 100,
     ticketType: 'free',
@@ -100,9 +100,9 @@ export const mockEvents: Event[] = [
   },
   {
     id: '2',
-    name: 'Brooklyn Bridge 5K Run',
+    name: 'Bangalore Marathon 5K',
     type: eventTypes[1],
-    description: 'Experience the thrill of running across the iconic Brooklyn Bridge in this exciting 5K race. The route offers stunning views of Manhattan skyline and the East River. Perfect for runners of all levels!',
+    description: 'Experience the thrill of running through the Garden City in this exciting 5K race. The route covers beautiful parks and heritage sites of Bangalore. Perfect for runners of all levels!',
     requirements: [
       'Running shoes mandatory',
       'Carry ID for registration',
@@ -114,23 +114,23 @@ export const mockEvents: Event[] = [
     rules: [
       'Registration closes 30 minutes before start time',
       'No pets allowed during the race',
-      'Follow traffic guidelines on the bridge',
+      'Follow traffic guidelines',
       'Medical clearance recommended for first-time participants'
     ],
     location: {
-      state: 'New York',
-      country: 'USA',
-      city: 'Brooklyn',
-      address: 'Brooklyn Bridge Promenade, Brooklyn, NY 11201',
+      state: 'Karnataka',
+      country: 'India',
+      city: 'Bangalore',
+      address: 'Cubbon Park, Bangalore',
       coordinates: {
-        lat: 40.7061,
-        lng: -73.9969
+        lat: 12.9716,
+        lng: 77.5946
       },
-      pincode: '11201'
+      pincode: '560001'
     },
     capacity: 200,
     ticketType: 'paid',
-    price: 25,
+    price: 500,
     createdBy: 'admin',
     createdAt: new Date('2024-08-18'),
     interestedUsers: ['user1', 'user6', 'user7'],
@@ -138,9 +138,9 @@ export const mockEvents: Event[] = [
   },
   {
     id: '3',
-    name: 'Washington Square Chess Tournament',
+    name: 'Connaught Place Chess Tournament',
     type: eventTypes[2],
-    description: 'Annual chess tournament in the heart of Greenwich Village. Open to players of all skill levels with separate categories for beginners, intermediate, and advanced players.',
+    description: 'Annual chess tournament in the heart of Delhi. Open to players of all skill levels with separate categories for beginners, intermediate, and advanced players.',
     requirements: [
       'Bring your own chess set if possible',
       'Registration fee includes light refreshments',
@@ -155,19 +155,19 @@ export const mockEvents: Event[] = [
       'Respectful conduct required at all times'
     ],
     location: {
-      state: 'New York',
-      country: 'USA',
-      city: 'New York',
-      address: 'Washington Square Park, New York, NY 10012',
+      state: 'Delhi',
+      country: 'India',
+      city: 'New Delhi',
+      address: 'Connaught Place, New Delhi',
       coordinates: {
-        lat: 40.7308,
-        lng: -73.9973
+        lat: 28.6315,
+        lng: 77.2167
       },
-      pincode: '10012'
+      pincode: '110001'
     },
     capacity: 64,
     ticketType: 'paid',
-    price: 15,
+    price: 300,
     createdBy: 'admin',
     createdAt: new Date('2024-08-25'),
     interestedUsers: ['user2', 'user8', 'user9', 'user10'],
@@ -175,9 +175,9 @@ export const mockEvents: Event[] = [
   },
   {
     id: '4',
-    name: 'Hudson River Bike Tour',
+    name: 'Ganga Aarti Bike Tour',
     type: eventTypes[3],
-    description: 'Scenic cycling tour along the Hudson River waterfront. We\'ll explore beautiful parks, historic sites, and enjoy breathtaking river views. Perfect for cycling enthusiasts and nature lovers!',
+    description: 'Scenic cycling tour along the ghats of Varanasi. We\'ll explore ancient temples, historic sites, and witness the beautiful Ganga Aarti. Perfect for cycling enthusiasts and culture lovers!',
     requirements: [
       'Bring your own bicycle',
       'Helmet mandatory for all participants',
@@ -193,15 +193,15 @@ export const mockEvents: Event[] = [
       'Group leaders\' instructions must be followed'
     ],
     location: {
-      state: 'New York',
-      country: 'USA',
-      city: 'New York',
-      address: 'Hudson River Park, Pier 40, New York, NY 10014',
+      state: 'Uttar Pradesh',
+      country: 'India',
+      city: 'Varanasi',
+      address: 'Dashashwamedh Ghat, Varanasi',
       coordinates: {
-        lat: 40.7282,
-        lng: -74.0084
+        lat: 25.3176,
+        lng: 82.9739
       },
-      pincode: '10014'
+      pincode: '221001'
     },
     ticketType: 'free',
     createdBy: 'admin',
@@ -211,9 +211,9 @@ export const mockEvents: Event[] = [
   },
   {
     id: '5',
-    name: 'Sunset Jazz Session at Bryant Park',
+    name: 'Sunset Jazz Session at India Gate',
     type: eventTypes[4],
-    description: 'Acoustic jazz jam session in the beautiful Bryant Park. Bring your instruments and join local musicians for an evening of improvisation and musical collaboration.',
+    description: 'Acoustic jazz jam session near the iconic India Gate. Bring your instruments and join local musicians for an evening of improvisation and musical collaboration.',
     requirements: [
       'Bring your own instrument',
       'Basic musical knowledge recommended',
@@ -229,15 +229,15 @@ export const mockEvents: Event[] = [
       'Clean up your space after the session'
     ],
     location: {
-      state: 'New York',
-      country: 'USA',
-      city: 'New York',
-      address: 'Bryant Park, New York, NY 10018',
+      state: 'Delhi',
+      country: 'India',
+      city: 'New Delhi',
+      address: 'India Gate, Rajpath, New Delhi',
       coordinates: {
-        lat: 40.7536,
-        lng: -73.9832
+        lat: 28.6129,
+        lng: 77.2295
       },
-      pincode: '10018'
+      pincode: '110003'
     },
     ticketType: 'free',
     createdBy: 'admin',

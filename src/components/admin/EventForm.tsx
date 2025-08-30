@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { eventTypes } from '../../data/mockData';
+import { indiaStates, citiesByState } from '../../data/indiaData';
 
 interface EventFormProps {
   event?: any;
@@ -29,7 +30,7 @@ const EventForm: React.FC<EventFormProps> = ({ event, onClose }) => {
       address: event?.location?.address || '',
       city: event?.location?.city || '',
       state: event?.location?.state || '',
-      country: event?.location?.country || 'USA',
+      country: event?.location?.country || 'India',
       pincode: event?.location?.pincode || '',
     },
     capacity: event?.capacity || '',
@@ -167,21 +168,38 @@ const EventForm: React.FC<EventFormProps> = ({ event, onClose }) => {
         />
 
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' }, gap: 2 }}>
-          <TextField
-            fullWidth
-            label="City"
-            value={formData.location.city}
-            onChange={(e) => handleInputChange('location.city', e.target.value)}
-            required
-          />
+          <FormControl fullWidth required>
+            <InputLabel>State</InputLabel>
+            <Select
+              value={formData.location.state}
+              onChange={(e) => {
+                handleInputChange('location.state', e.target.value);
+                handleInputChange('location.city', ''); // Reset city when state changes
+              }}
+              label="State"
+            >
+              {indiaStates.map((state) => (
+                <MenuItem key={state.id} value={state.name}>
+                  {state.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-          <TextField
-            fullWidth
-            label="State"
-            value={formData.location.state}
-            onChange={(e) => handleInputChange('location.state', e.target.value)}
-            required
-          />
+          <FormControl fullWidth required disabled={!formData.location.state}>
+            <InputLabel>City</InputLabel>
+            <Select
+              value={formData.location.city}
+              onChange={(e) => handleInputChange('location.city', e.target.value)}
+              label="City"
+            >
+              {formData.location.state && citiesByState[indiaStates.find(s => s.name === formData.location.state)?.id || '']?.map((city) => (
+                <MenuItem key={city} value={city}>
+                  {city}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           <TextField
             fullWidth
