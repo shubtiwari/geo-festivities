@@ -31,12 +31,14 @@ import {
 } from '@mui/icons-material';
 import { Event } from '../types';
 import { mockEvents } from '../data/mockData';
+import InterestModal from '../components/InterestModal';
 
 const EventDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [event, setEvent] = useState<Event | null>(null);
   const [isInterested, setIsInterested] = useState(false);
+  const [showInterestModal, setShowInterestModal] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -46,8 +48,16 @@ const EventDetail: React.FC = () => {
   }, [id]);
 
   const handleInterested = () => {
-    setIsInterested(!isInterested);
-    // In a real app, this would update the backend
+    if (!isInterested) {
+      setShowInterestModal(true);
+    } else {
+      setIsInterested(false);
+    }
+  };
+
+  const handleInterestModalClose = () => {
+    setShowInterestModal(false);
+    setIsInterested(true);
   };
 
   const handleShare = () => {
@@ -212,6 +222,12 @@ const EventDetail: React.FC = () => {
           </Card>
         </Box>
       </Box>
+      
+      <InterestModal
+        open={showInterestModal}
+        onClose={handleInterestModalClose}
+        eventName={event.name}
+      />
     </Container>
   );
 };

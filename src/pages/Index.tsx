@@ -75,6 +75,19 @@ const Index: React.FC = () => {
       filtered = filtered.filter(event => event.ticketType === filters.ticketType);
     }
 
+    // Radius filter (if user location is available)
+    if (userLocation && filters.location.radius) {
+      filtered = filtered.filter(event => {
+        const distance = calculateDistance(
+          userLocation.lat,
+          userLocation.lng,
+          event.location.coordinates.lat,
+          event.location.coordinates.lng
+        );
+        return distance <= filters.location.radius;
+      });
+    }
+
     setFilteredEvents(filtered);
   }, [searchTerm, filters, events]);
 
@@ -97,6 +110,18 @@ const Index: React.FC = () => {
       ...prev,
       location: { ...prev.location, radius: newValue as number }
     }));
+  };
+
+  // Calculate distance between two points using Haversine formula
+  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+    const R = 6371; // Earth's radius in kilometers
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng/2) * Math.sin(dLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
   };
 
   if (showLocationPermission && !userLocation) {

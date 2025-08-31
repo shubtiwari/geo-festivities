@@ -16,6 +16,7 @@ import {
   LocationOn as LocationIcon,
   MyLocation as MyLocationIcon,
 } from '@mui/icons-material';
+import { countries, statesByCountry, citiesByCountryState, pincodeData } from '../data/countriesData';
 
 interface LocationPermissionProps {
   onLocationResult: (location: {lat: number, lng: number} | null) => void;
@@ -27,7 +28,8 @@ const LocationPermission: React.FC<LocationPermissionProps> = ({ onLocationResul
   const [manualLocation, setManualLocation] = useState({
     city: '',
     state: '',
-    country: 'USA'
+    country: 'india',
+    pincode: ''
   });
 
   const handleGetLocation = () => {
@@ -60,24 +62,57 @@ const LocationPermission: React.FC<LocationPermissionProps> = ({ onLocationResul
     }
   };
 
+  const handlePincodeChange = (pincode: string) => {
+    setManualLocation(prev => ({ ...prev, pincode }));
+    
+    // Auto-fill location from pincode
+    if (pincode.length === 6 && pincodeData[pincode]) {
+      const locationData = pincodeData[pincode];
+      setManualLocation(prev => ({
+        ...prev,
+        city: locationData.city,
+        state: locationData.state,
+        country: locationData.country.toLowerCase()
+      }));
+    }
+  };
+
+  const handleCountryChange = (country: string) => {
+    setManualLocation(prev => ({
+      ...prev,
+      country,
+      state: '',
+      city: '',
+      pincode: ''
+    }));
+  };
+
+  const handleStateChange = (state: string) => {
+    setManualLocation(prev => ({
+      ...prev,
+      state,
+      city: ''
+    }));
+  };
+
   const handleManualSubmit = () => {
     // In a real app, you would geocode the city/state to get coordinates
-    // For demo purposes, we'll use approximate coordinates for major cities
+    // For demo purposes, we'll use approximate coordinates for major Indian cities
     const cityCoordinates: {[key: string]: {lat: number, lng: number}} = {
-      'new york': { lat: 40.7128, lng: -74.0060 },
-      'los angeles': { lat: 34.0522, lng: -118.2437 },
-      'chicago': { lat: 41.8781, lng: -87.6298 },
-      'houston': { lat: 29.7604, lng: -95.3698 },
-      'phoenix': { lat: 33.4484, lng: -112.0740 },
-      'philadelphia': { lat: 39.9526, lng: -75.1652 },
-      'san antonio': { lat: 29.4241, lng: -98.4936 },
-      'san diego': { lat: 32.7157, lng: -117.1611 },
-      'dallas': { lat: 32.7767, lng: -96.7970 },
-      'san jose': { lat: 37.3382, lng: -121.8863 }
+      'mumbai': { lat: 19.0760, lng: 72.8777 },
+      'delhi': { lat: 28.7041, lng: 77.1025 },
+      'new delhi': { lat: 28.6139, lng: 77.2090 },
+      'bangalore': { lat: 12.9716, lng: 77.5946 },
+      'chennai': { lat: 13.0827, lng: 80.2707 },
+      'kolkata': { lat: 22.5726, lng: 88.3639 },
+      'pune': { lat: 18.5204, lng: 73.8567 },
+      'hyderabad': { lat: 17.3850, lng: 78.4867 },
+      'jaipur': { lat: 26.9124, lng: 75.7873 },
+      'ahmedabad': { lat: 23.0225, lng: 72.5714 }
     };
 
     const cityKey = manualLocation.city.toLowerCase();
-    const coordinates = cityCoordinates[cityKey] || { lat: 40.7128, lng: -74.0060 }; // Default to NYC
+    const coordinates = cityCoordinates[cityKey] || { lat: 28.7041, lng: 77.1025 }; // Default to Delhi
     
     onLocationResult(coordinates);
   };
@@ -124,30 +159,56 @@ const LocationPermission: React.FC<LocationPermissionProps> = ({ onLocationResul
           <Box sx={{ mb: 3 }}>
             <TextField
               fullWidth
-              label="City"
-              value={manualLocation.city}
-              onChange={(e) => setManualLocation(prev => ({ ...prev, city: e.target.value }))}
+              label="Pincode (Auto-fill)"
+              value={manualLocation.pincode}
+              onChange={(e) => handlePincodeChange(e.target.value)}
               sx={{ mb: 2 }}
-            />
-            
-            <TextField
-              fullWidth
-              label="State"
-              value={manualLocation.state}
-              onChange={(e) => setManualLocation(prev => ({ ...prev, state: e.target.value }))}
-              sx={{ mb: 2 }}
+              placeholder="Enter 6-digit pincode"
             />
             
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>Country</InputLabel>
               <Select
                 value={manualLocation.country}
-                onChange={(e) => setManualLocation(prev => ({ ...prev, country: e.target.value }))}
+                onChange={(e) => handleCountryChange(e.target.value)}
                 label="Country"
               >
-                <MenuItem value="USA">United States</MenuItem>
-                <MenuItem value="Canada">Canada</MenuItem>
-                <MenuItem value="UK">United Kingdom</MenuItem>
+                {countries.map((country) => (
+                  <MenuItem key={country.id} value={country.id}>
+                    {country.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            
+            <FormControl fullWidth sx={{ mb: 2 }} disabled={!manualLocation.country}>
+              <InputLabel>State</InputLabel>
+              <Select
+                value={manualLocation.state}
+                onChange={(e) => handleStateChange(e.target.value)}
+                label="State"
+              >
+                {manualLocation.country && statesByCountry[manualLocation.country]?.map((state) => (
+                  <MenuItem key={state.id} value={state.name}>
+                    {state.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            
+            <FormControl fullWidth sx={{ mb: 2 }} disabled={!manualLocation.state}>
+              <InputLabel>City</InputLabel>
+              <Select
+                value={manualLocation.city}
+                onChange={(e) => setManualLocation(prev => ({ ...prev, city: e.target.value }))}
+                label="City"
+              >
+                {manualLocation.country && manualLocation.state && 
+                 citiesByCountryState[manualLocation.country]?.[manualLocation.state.toLowerCase().replace(/\s+/g, '-')]?.map((city) => (
+                  <MenuItem key={city} value={city}>
+                    {city}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
 
