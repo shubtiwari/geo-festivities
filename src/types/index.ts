@@ -40,7 +40,9 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'user' | 'admin';
+  phone: string;
+  gender: string;
+  role: 'user' | 'admin' | 'provider';
   location?: {
     city: string;
     state: string;
@@ -52,6 +54,19 @@ export interface User {
   };
   interestedEvents: string[];
   joinedEvents: string[];
+}
+
+export interface ServiceProvider extends User {
+  role: 'provider';
+  services: string[];
+  experience: number;
+  description: string;
+  availability: 'full-time' | 'part-time' | 'weekends' | 'on-call';
+  hourlyRate: number;
+  rating: number;
+  totalReviews: number;
+  isVerified: boolean;
+  profileImage?: string;
 }
 
 export interface LocationFilter {

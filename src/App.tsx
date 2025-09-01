@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/AdminDashboard";
 import EventDetail from "./pages/EventDetail";
 import AdminLogin from "./pages/AdminLogin";
+import Signup from "./pages/Signup";
+import ServiceProviders from "./pages/ServiceProviders";
 
 const queryClient = new QueryClient();
 
@@ -23,8 +25,10 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<ServiceProviders />} />
+            <Route path="/events" element={<Index />} />
             <Route path="/event/:id" element={<EventDetail />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/admin" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

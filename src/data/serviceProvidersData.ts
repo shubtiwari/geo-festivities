@@ -1,0 +1,211 @@
+import { ServiceProvider } from '../types';
+
+export const mockServiceProviders: ServiceProvider[] = [
+  {
+    id: 'sp1',
+    name: 'Rajesh Kumar',
+    email: 'rajesh.electrician@email.com',
+    phone: '+91-9876543210',
+    gender: 'male',
+    role: 'provider',
+    services: ['Electrician'],
+    experience: 8,
+    description: 'Experienced electrician specializing in home wiring, appliance repair, and electrical troubleshooting. Available for emergency calls.',
+    availability: 'full-time',
+    hourlyRate: 300,
+    rating: 4.8,
+    totalReviews: 127,
+    isVerified: true,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9447, lng: 72.8258 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp2',
+    name: 'Priya Sharma',
+    email: 'priya.plumber@email.com',
+    phone: '+91-9876543211',
+    gender: 'female',
+    role: 'provider',
+    services: ['Plumber'],
+    experience: 5,
+    description: 'Professional plumber with expertise in pipe fitting, bathroom repairs, and water system maintenance.',
+    availability: 'part-time',
+    hourlyRate: 250,
+    rating: 4.6,
+    totalReviews: 89,
+    isVerified: true,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9387, lng: 72.8215 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp3',
+    name: 'Mohammed Ali',
+    email: 'ali.driver@email.com',
+    phone: '+91-9876543212',
+    gender: 'male',
+    role: 'provider',
+    services: ['Driver'],
+    experience: 12,
+    description: 'Reliable driver with clean driving record. Experienced in city routes and long-distance travel.',
+    availability: 'full-time',
+    hourlyRate: 200,
+    rating: 4.9,
+    totalReviews: 203,
+    isVerified: true,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9420, lng: 72.8195 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp4',
+    name: 'Suresh Carpenter',
+    email: 'suresh.carpenter@email.com',
+    phone: '+91-9876543213',
+    gender: 'male',
+    role: 'provider',
+    services: ['Carpenter', 'Painter'],
+    experience: 15,
+    description: 'Skilled carpenter and painter specializing in furniture making, home renovation, and interior painting.',
+    availability: 'full-time',
+    hourlyRate: 350,
+    rating: 4.7,
+    totalReviews: 156,
+    isVerified: true,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9465, lng: 72.8277 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp5',
+    name: 'Laxmi Devi',
+    email: 'laxmi.cook@email.com',
+    phone: '+91-9876543214',
+    gender: 'female',
+    role: 'provider',
+    services: ['Cook', 'Cleaner'],
+    experience: 10,
+    description: 'Experienced cook and housekeeper. Specializes in North Indian cuisine and maintains high hygiene standards.',
+    availability: 'part-time',
+    hourlyRate: 180,
+    rating: 4.5,
+    totalReviews: 94,
+    isVerified: false,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9350, lng: 72.8189 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp6',
+    name: 'Vikram Mechanic',
+    email: 'vikram.mechanic@email.com',
+    phone: '+91-9876543215',
+    gender: 'male',
+    role: 'provider',
+    services: ['Mechanic'],
+    experience: 7,
+    description: 'Auto mechanic specializing in two-wheelers and cars. Provides on-site repair services.',
+    availability: 'on-call',
+    hourlyRate: 400,
+    rating: 4.3,
+    totalReviews: 67,
+    isVerified: true,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9510, lng: 72.8302 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp7',
+    name: 'Ravi Gardener',
+    email: 'ravi.gardener@email.com',
+    phone: '+91-9876543216',
+    gender: 'male',
+    role: 'provider',
+    services: ['Gardener'],
+    experience: 6,
+    description: 'Professional gardener with knowledge of plant care, landscaping, and organic farming methods.',
+    availability: 'weekends',
+    hourlyRate: 150,
+    rating: 4.4,
+    totalReviews: 43,
+    isVerified: false,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9290, lng: 72.8140 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  },
+  {
+    id: 'sp8',
+    name: 'Anita Security',
+    email: 'anita.security@email.com',
+    phone: '+91-9876543217',
+    gender: 'female',
+    role: 'provider',
+    services: ['Security Guard'],
+    experience: 4,
+    description: 'Trained security guard with experience in residential and commercial security. Available for night shifts.',
+    availability: 'full-time',
+    hourlyRate: 120,
+    rating: 4.2,
+    totalReviews: 28,
+    isVerified: true,
+    location: {
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      coordinates: { lat: 18.9530, lng: 72.8347 }
+    },
+    interestedEvents: [],
+    joinedEvents: []
+  }
+];
+
+export const serviceCategories = [
+  { name: 'Electrician', icon: '⚡', color: '#FFB74D' },
+  { name: 'Plumber', icon: '🔧', color: '#64B5F6' },
+  { name: 'Driver', icon: '🚗', color: '#81C784' },
+  { name: 'Carpenter', icon: '🔨', color: '#A1887F' },
+  { name: 'Painter', icon: '🎨', color: '#F06292' },
+  { name: 'Mechanic', icon: '⚙️', color: '#9575CD' },
+  { name: 'Cleaner', icon: '🧽', color: '#4FC3F7' },
+  { name: 'Cook', icon: '👨‍🍳', color: '#FF8A65' },
+  { name: 'Gardener', icon: '🌱', color: '#AED581' },
+  { name: 'Security Guard', icon: '🛡️', color: '#78909C' },
+  { name: 'Delivery Person', icon: '📦', color: '#FFD54F' },
+  { name: 'Other', icon: '🔧', color: '#BCAAA4' }
+];

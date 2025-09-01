@@ -136,6 +136,18 @@ const Index: React.FC = () => {
           <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: 'primary.main', fontWeight: 'bold' }}>
             🎪 Eventify
           </Typography>
+          <Button
+            onClick={() => navigate('/')}
+            sx={{ mr: 1 }}
+          >
+            Services
+          </Button>
+          <Button
+            onClick={() => navigate('/signup')}
+            sx={{ mr: 1 }}
+          >
+            Join Us
+          </Button>
           <IconButton onClick={() => navigate('/admin')}>
             <AdminIcon />
           </IconButton>
