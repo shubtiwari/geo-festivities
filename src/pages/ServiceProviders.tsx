@@ -1,34 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Chip,
-  TextField,
-  InputAdornment,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
-  Slider,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Grid,
-} from '@mui/material';
-import {
-  Search as SearchIcon,
-  LocationOn as LocationIcon,
-  PersonAdd as SignupIcon,
-  AccountCircle as AccountIcon,
-  AdminPanelSettings as AdminIcon,
-} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { Search, MapPin, Filter, UserPlus, Settings, Phone } from 'lucide-react';
 import { mockServiceProviders, serviceCategories } from '../data/serviceProvidersData';
 import { ServiceProvider } from '../types';
 import ServiceProviderCard from '../components/ServiceProviderCard';
 import LocationPermission from '../components/LocationPermission';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Slider } from '@/components/ui/slider';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const ServiceProviders: React.FC = () => {
   const navigate = useNavigate();
@@ -38,7 +20,7 @@ const ServiceProviders: React.FC = () => {
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
   const [showLocationPermission, setShowLocationPermission] = useState(true);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [radius, setRadius] = useState(5);
+  const [radius, setRadius] = useState([5]);
   const [availability, setAvailability] = useState<string>('all');
 
   // Filter providers based on search term, services, and location
@@ -78,7 +60,7 @@ const ServiceProviders: React.FC = () => {
             provider.location.coordinates.lat,
             provider.location.coordinates.lng
           );
-          return distance <= radius;
+          return distance <= radius[0];
         }
         return false;
       });
@@ -124,7 +106,6 @@ const ServiceProviders: React.FC = () => {
   };
 
   const handleCall = (provider: ServiceProvider) => {
-    // In a real app, this would open the phone dialer
     window.open(`tel:${provider.phone}`, '_self');
   };
 
@@ -132,7 +113,7 @@ const ServiceProviders: React.FC = () => {
     setSearchTerm('');
     setSelectedServices([]);
     setAvailability('all');
-    setRadius(5);
+    setRadius([5]);
   };
 
   if (showLocationPermission && !userLocation) {
@@ -140,166 +121,240 @@ const ServiceProviders: React.FC = () => {
   }
 
   return (
-    <Box>
-      {/* Header */}
-      <AppBar position="static" elevation={0} sx={{ backgroundColor: 'background.paper', borderBottom: 1, borderColor: 'divider' }}>
-        <Toolbar>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1, color: 'primary.main', fontWeight: 'bold' }}>
-            🔧 ServiceFinder
-          </Typography>
-          <Button
-            startIcon={<SignupIcon />}
-            onClick={() => navigate('/signup')}
-            sx={{ mr: 1 }}
-          >
-            Join Us
-          </Button>
-          <IconButton onClick={() => navigate('/admin')}>
-            <AdminIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        {/* Hero Section */}
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography variant="h2" component="h1" gutterBottom>
-            Find Local Service Providers
-          </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-            Connect with trusted electricians, plumbers, drivers, and more in your area
-          </Typography>
-          
-          {/* Search Bar */}
-          <Box sx={{ maxWidth: 600, mx: 'auto', mb: 4 }}>
-            <TextField
-              fullWidth
-              placeholder="Search for services, providers, or skills..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{ backgroundColor: 'background.paper' }}
-            />
-          </Box>
-        </Box>
-
-        {/* Filters */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Filter by Services
-          </Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-            {serviceCategories.map((category) => (
-              <Chip
-                key={category.name}
-                label={`${category.icon} ${category.name}`}
-                onClick={() => handleServiceFilter(category.name)}
-                color={selectedServices.includes(category.name) ? "primary" : "default"}
-                variant={selectedServices.includes(category.name) ? "filled" : "outlined"}
-                sx={{ 
-                  backgroundColor: selectedServices.includes(category.name) ? category.color : undefined,
-                  '&:hover': {
-                    backgroundColor: selectedServices.includes(category.name) ? category.color : undefined,
-                    opacity: 0.8
-                  }
-                }}
-              />
-            ))}
-          </Box>
-
-          <Box sx={{ display: 'flex', gap: 3, alignItems: 'center', flexWrap: 'wrap' }}>
-            <Box sx={{ minWidth: 200 }}>
-              <Typography variant="body2" gutterBottom>
-                Search Radius: {radius}km
-              </Typography>
-              <Slider
-                value={radius}
-                onChange={(_, newValue) => setRadius(newValue as number)}
-                min={1}
-                max={20}
-                step={1}
-                marks={[
-                  { value: 1, label: '1km' },
-                  { value: 5, label: '5km' },
-                  { value: 10, label: '10km' },
-                  { value: 20, label: '20km' }
-                ]}
-                valueLabelDisplay="auto"
-                disabled={!userLocation}
-              />
-            </Box>
-
-            <FormControl sx={{ minWidth: 150 }}>
-              <InputLabel>Availability</InputLabel>
-              <Select
-                value={availability}
-                label="Availability"
-                onChange={(e) => setAvailability(e.target.value)}
+    <div className="min-h-screen">
+      {/* Modern Header */}
+      <header className="glass-card border-0 border-b border-border/20 backdrop-blur-md sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-sm">SF</span>
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                ServiceFinder
+              </h1>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/signup')}
+                className="gradient-button border-0"
               >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="full-time">Full Time</MenuItem>
-                <MenuItem value="part-time">Part Time</MenuItem>
-                <MenuItem value="weekends">Weekends</MenuItem>
-                <MenuItem value="on-call">On Call</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
+                <UserPlus className="w-4 h-4 mr-2" />
+                Join Us
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => navigate('/admin')}
+              >
+                <Settings className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
 
-        {/* Results */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h6">
-            {filteredProviders.length} Service Provider{filteredProviders.length !== 1 ? 's' : ''} Found
-          </Typography>
+      <main className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12 animate-fade-in">
+          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
+            Find Local Service Providers
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Connect with trusted professionals in your area. From electricians to drivers, find the right service provider in seconds.
+          </p>
+          
+          {/* Modern Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <Input
+                placeholder="Search for services, providers, or skills..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="modern-input pl-12 h-14 text-lg rounded-2xl"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Filters Section */}
+        <Card className="glass-card mb-8 animate-slide-up">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Filter className="w-5 h-5" />
+              <span>Filters</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Service Categories */}
+            <div>
+              <h3 className="text-sm font-medium text-muted-foreground mb-3">Service Categories</h3>
+              <div className="flex flex-wrap gap-2">
+                {serviceCategories.map((category) => (
+                  <Badge
+                    key={category.name}
+                    variant={selectedServices.includes(category.name) ? "default" : "outline"}
+                    className={`cursor-pointer transition-all duration-200 ${
+                      selectedServices.includes(category.name) 
+                        ? 'gradient-button' 
+                        : 'hover:bg-accent hover:text-accent-foreground'
+                    }`}
+                    onClick={() => handleServiceFilter(category.name)}
+                  >
+                    <span className="mr-1">{category.icon}</span>
+                    {category.name}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Distance Filter */}
+              <div>
+                <label className="text-sm font-medium text-muted-foreground mb-3 block">
+                  Search Radius: {radius[0]}km
+                </label>
+                <Slider
+                  value={radius}
+                  onValueChange={setRadius}
+                  min={1}
+                  max={20}
+                  step={1}
+                  className="w-full"
+                  disabled={!userLocation}
+                />
+                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                  <span>1km</span>
+                  <span>20km</span>
+                </div>
+              </div>
+
+              {/* Availability Filter */}
+              <div>
+                <label className="text-sm font-medium text-muted-foreground mb-3 block">
+                  Availability
+                </label>
+                <Select value={availability} onValueChange={setAvailability}>
+                  <SelectTrigger className="modern-input">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="full-time">Full Time</SelectItem>
+                    <SelectItem value="part-time">Part Time</SelectItem>
+                    <SelectItem value="weekends">Weekends</SelectItem>
+                    <SelectItem value="on-call">On Call</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Results Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-2">
+            <MapPin className="w-5 h-5 text-muted-foreground" />
+            <span className="text-lg font-semibold">
+              {filteredProviders.length} Provider{filteredProviders.length !== 1 ? 's' : ''} Found
+            </span>
+          </div>
           {(selectedServices.length > 0 || searchTerm || availability !== 'all') && (
-            <Button onClick={clearFilters} variant="outlined">
+            <Button onClick={clearFilters} variant="outline">
               Clear Filters
             </Button>
           )}
-        </Box>
+        </div>
 
         {/* Service Providers Grid */}
         {filteredProviders.length > 0 ? (
-          <Box sx={{ 
-            display: 'grid', 
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)'
-            },
-            gap: 3
-          }}>
-            {filteredProviders.map((provider) => (
-              <ServiceProviderCard
-                key={provider.id}
-                provider={provider}
-                distance={getProviderDistance(provider)}
-                onCall={() => handleCall(provider)}
-              />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in">
+            {filteredProviders.map((provider, index) => (
+              <div 
+                key={provider.id} 
+                className="animate-slide-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <Card className="glass-card hover:shadow-lg transition-all duration-300 group">
+                  <CardContent className="p-6">
+                    <div className="flex items-start space-x-4 mb-4">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold">
+                        {provider.name.charAt(0)}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-lg">{provider.name}</h3>
+                        <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                          <span>⭐ {provider.rating}</span>
+                          <span>({provider.totalReviews} reviews)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {provider.services.slice(0, 2).map((service, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs">
+                            {service}
+                          </Badge>
+                        ))}
+                        {provider.services.length > 2 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{provider.services.length - 2} more
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {provider.description}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm mb-4">
+                      <span className="text-muted-foreground">{provider.experience}+ years</span>
+                      <span className="font-semibold">₹{provider.hourlyRate}/hr</span>
+                    </div>
+
+                    {getProviderDistance(provider) && (
+                      <div className="flex items-center space-x-1 text-sm text-muted-foreground mb-4">
+                        <MapPin className="w-3 h-3" />
+                        <span>
+                          {getProviderDistance(provider)! < 1 
+                            ? `${Math.round(getProviderDistance(provider)! * 1000)}m away`
+                            : `${getProviderDistance(provider)!.toFixed(1)}km away`
+                          }
+                        </span>
+                      </div>
+                    )}
+
+                    <Button 
+                      onClick={() => handleCall(provider)}
+                      className="w-full gradient-button"
+                    >
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call Now
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
-          </Box>
+          </div>
         ) : (
-          <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              No service providers found
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              Try adjusting your filters or search in a different area
-            </Typography>
-            <Button onClick={clearFilters} variant="contained">
-              Clear Filters
-            </Button>
-          </Box>
+          <Card className="glass-card text-center py-12">
+            <CardContent>
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold mb-2">No service providers found</h3>
+              <p className="text-muted-foreground mb-6">
+                Try adjusting your filters or search in a different area
+              </p>
+              <Button onClick={clearFilters} className="gradient-button">
+                Clear Filters
+              </Button>
+            </CardContent>
+          </Card>
         )}
-      </Container>
-    </Box>
+      </main>
+    </div>
   );
 };
 
